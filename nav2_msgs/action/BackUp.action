@@ -4,5 +4,6 @@ float32 speed
 ---
 #result definition
 uint32 status_code
+builtin_interfaces/Duration total_elapsed_time
 ---
 float32 distance_traveled
