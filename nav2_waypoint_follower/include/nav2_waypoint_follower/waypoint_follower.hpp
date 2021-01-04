@@ -111,9 +111,9 @@ protected:
 
   /**
    * @brief Action client goal response callback
-   * @param goal Response of action server updated asynchronously
+   * @param future Response of action server updated asynchronously
    */
-  void goalResponseCallback(const rclcpp_action::ClientGoalHandle<ClientT>::SharedPtr & goal);
+  void goalResponseCallback(std::shared_future<rclcpp_action::ClientGoalHandle<ClientT>::SharedPtr> future);
 
   // Our action server
   std::unique_ptr<ActionServer> action_server_;
