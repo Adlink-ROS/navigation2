@@ -153,9 +153,7 @@ public:
         goal_updated_ = false;
         on_new_goal_received();
       }
-
       rclcpp::spin_some(node_);
-
       // check if, after invoking spin_some(), we finally received the result
       if (!goal_result_available_) {
         // Yield this Action, returning RUNNING
@@ -229,8 +227,15 @@ protected:
       };
 
     auto future_goal_handle = action_client_->async_send_goal(goal_, send_goal_options);
+    
+    //For spin with timeout
+    //std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+    //auto rtn = rclcpp::spin_until_future_complete(node_, future_goal_handle, server_timeout_);
+    //std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
+    //std::cout<<"delay:"<<std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count()<<std::endl;
 
-    auto rtn = rclcpp::spin_until_future_complete(node_, future_goal_handle, server_timeout_);
+    auto rtn = rclcpp::spin_until_future_complete(node_, future_goal_handle);
+
     if (rtn != rclcpp::FutureReturnCode::SUCCESS)
     { 
       std::cout << "rtn " << rtn << std::endl;      

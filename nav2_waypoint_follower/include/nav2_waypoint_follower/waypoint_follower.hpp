@@ -116,9 +116,10 @@ protected:
   void goalResponseCallback(std::shared_future<rclcpp_action::ClientGoalHandle<ClientT>::SharedPtr> future);
 
   // Our action server
+  rclcpp::Node::SharedPtr client_node_;
   std::unique_ptr<ActionServer> action_server_;
   ActionClient::SharedPtr nav_to_pose_client_;
-  rclcpp::Node::SharedPtr client_node_;
+  
   std::shared_future<rclcpp_action::ClientGoalHandle<ClientT>::SharedPtr> future_goal_handle_;
   bool stop_on_failure_;
   ActionStatus current_goal_status_;
