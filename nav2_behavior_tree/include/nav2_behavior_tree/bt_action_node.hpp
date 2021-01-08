@@ -229,10 +229,23 @@ protected:
       };
 
     auto future_goal_handle = action_client_->async_send_goal(goal_, send_goal_options);
+    
+#if 0    
+    // Please refer to this issue: https://github.com/ros2/ros2/issues/1074
+    // The code snippet below is what we use to measure the elpased time.    
+    std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
+    auto rtn = rclcpp::spin_until_future_complete(node_, future_goal_handle, server_timeout_);
+    std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
+    std::cout << "delay:" << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << std::endl;
+#else    
+    // We found there were potential timeout. So now we remove the timeout.
+    auto rtn = rclcpp::spin_until_future_complete(node_, future_goal_handle);
+#endif    
 
-    if (rclcpp::spin_until_future_complete(node_, future_goal_handle, server_timeout_) !=
-      rclcpp::FutureReturnCode::SUCCESS)
-    {
+    if (rtn != rclcpp::FutureReturnCode::SUCCESS)
+    { 
+      std::cout << "rtn " << rtn << std::endl;      
+      std::cout << "Is timeout? " << (rtn ==  rclcpp::FutureReturnCode::TIMEOUT) << std::endl;
       throw std::runtime_error("send_goal failed");
     }
 

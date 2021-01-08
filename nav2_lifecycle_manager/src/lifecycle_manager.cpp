@@ -159,7 +159,7 @@ LifecycleManager::createBondConnection(const std::string & node_name)
     bond_map_[node_name]->start();
     if (
       !bond_map_[node_name]->waitUntilFormed(
-        rclcpp::Duration(rclcpp::Duration::from_nanoseconds(timeout_ns / 2))))
+        rclcpp::Duration(timeout_ns / 2)))
     {
       RCLCPP_ERROR(
         get_logger(),
