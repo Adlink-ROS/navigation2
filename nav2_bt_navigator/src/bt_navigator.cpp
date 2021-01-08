@@ -217,8 +217,8 @@ BtNavigator::on_cleanup(const rclcpp_lifecycle::State & /*state*/)
 
   // TODO(orduno) Fix the race condition between the worker thread ticking the tree
   //              and the main thread resetting the resources, see #1344
-  client_node_.reset();
   goal_sub_.reset();
+  client_node_.reset();
   self_client_.reset();
 
   // Reset the listener before the buffer
