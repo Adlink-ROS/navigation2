@@ -153,9 +153,9 @@ public:
         goal_updated_ = false;
         on_new_goal_received();
       }
-      
+
       rclcpp::spin_some(node_);
-      
+
       // check if, after invoking spin_some(), we finally received the result
       if (!goal_result_available_) {
         // Yield this Action, returning RUNNING
