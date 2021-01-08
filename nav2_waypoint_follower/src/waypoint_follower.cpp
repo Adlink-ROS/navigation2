@@ -124,8 +124,8 @@ WaypointFollower::on_cleanup(const rclcpp_lifecycle::State & /*state*/)
 {
   RCLCPP_INFO(get_logger(), "Cleaning up");
   
-  nav_to_pose_client_.reset();
   action_server_.reset();
+  nav_to_pose_client_.reset();
 
   return nav2_util::CallbackReturn::SUCCESS;
 }
